@@ -31,7 +31,50 @@ def view_tasks():
     pass
 
 def edit_task():
-    pass
+    # แสดงรายการงานก่อน
+    view_tasks()
+    
+    if not tasks:  # ถ้าไม่มีงานในรายการ
+        return  # ออกจากฟังก์ชันเลย เพราะไม่มีงานให้แก้ไข
+    
+    # รับ index จากผู้ใช้
+    try:
+        index = int(input("\nกรุณาเลือกลำดับงานที่ต้องการแก้ไข: ")) - 1
+        
+        # ตรวจสอบว่า index ถูกต้องหรือไม่
+        if index < 0 or index >= len(tasks):
+            print("ลำดับงานไม่ถูกต้อง")
+            return
+            
+        # แสดงเมนูการแก้ไข
+        print("\n=== เมนูแก้ไขงาน ===")
+        print("1. แก้ไขชื่อเรื่อง")
+        print("2. แก้ไขรายละเอียด")
+        print("3. เปลี่ยนสถานะงาน")
+        
+        edit_choice = input("เลือกรายการที่ต้องการแก้ไข (1-3): ")
+        
+        if edit_choice == "1":
+            new_title = input("ชื่อเรื่องใหม่: ")
+            tasks[index]["title"] = new_title
+            print("แก้ไขชื่อเรื่องเรียบร้อยแล้ว")
+            
+        elif edit_choice == "2":
+            new_description = input("รายละเอียดใหม่: ")
+            tasks[index]["description"] = new_description
+            print("แก้ไขรายละเอียดเรียบร้อยแล้ว")
+            
+        elif edit_choice == "3":
+            current_status = tasks[index]["completed"]
+            tasks[index]["completed"] = not current_status
+            status_text = "เสร็จแล้ว" if not current_status else "ยังไม่เสร็จ"
+            print(f"เปลี่ยนสถานะเป็น: {status_text}")
+            
+        else:
+            print("ตัวเลือกไม่ถูกต้อง")
+            
+    except ValueError:
+        print("กรุณาป้อนตัวเลขเท่านั้น")
 
 def delete_task():
     pass
