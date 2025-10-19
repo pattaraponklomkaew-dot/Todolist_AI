@@ -28,7 +28,19 @@ def add_task():
     task_counter += 1
 
 def view_tasks():
-    pass
+    print("\n=== รายการงานทั้งหมด ===")
+    
+    if not tasks:  # ถ้าไม่มีงานในรายการ
+        print("ยังไม่มีงานในรายการ")
+        return
+    
+    # แสดงรายการงานทั้งหมด
+    print("\nลำดับ | ชื่องาน | วันครบกำหนด | สถานะ")
+    print("-" * 50)
+    
+    for i, task in enumerate(tasks, 1):
+        status = "✓ เสร็จแล้ว" if task["completed"] else "✗ ยังไม่เสร็จ"
+        print(f"{i}. {task['title']} | {task['due_date']} | {status}")
 
 def edit_task():
     pass
