@@ -1,5 +1,31 @@
+# Global variables
+tasks = []  # List to store all tasks
+task_counter = 1  # Counter for generating unique task IDs
+
 def add_task():
-    pass
+    global task_counter
+    print("\n=== เพิ่มงานใหม่ ===")
+    
+    # รับข้อมูลจากผู้ใช้
+    title = input("ชื่อเรื่อง: ")
+    description = input("รายละเอียด: ")
+    due_date = input("วันครบกำหนด (เช่น 2025-12-31): ")
+    
+    # สร้าง task ใหม่
+    task = {
+        "id": task_counter,
+        "title": title,
+        "description": description,
+        "due_date": due_date,
+        "completed": False
+    }
+    
+    # เพิ่ม task ลงในรายการ
+    tasks.append(task)
+    print(f"\nเพิ่มงาน '{title}' เรียบร้อยแล้ว")
+    
+    # เพิ่ม counter สำหรับ ID ถัดไป
+    task_counter += 1
 
 def view_tasks():
     pass
