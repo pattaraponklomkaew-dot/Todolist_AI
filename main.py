@@ -1,3 +1,6 @@
+import json
+import os
+
 # Global variables
 tasks = []  # List to store all tasks
 task_counter = 1  # Counter for generating unique task IDs
@@ -118,7 +121,41 @@ def delete_task():
     except ValueError:
         print("กรุณาป้อนตัวเลขเท่านั้น")
 
+def save_tasks():
+    try:
+        with open('tasks.json', 'w', encoding='utf-8') as f:
+            # บันทึกทั้ง tasks และ task_counter
+            data = {
+                'tasks': tasks,
+                'task_counter': task_counter
+            }
+            json.dump(data, f, ensure_ascii=False, indent=2)
+        print("\nบันทึกข้อมูลเรียบร้อยแล้ว")
+    except Exception as e:
+        print(f"\nเกิดข้อผิดพลาดในการบันทึกข้อมูล: {e}")
+
+def load_tasks():
+    global tasks, task_counter
+    try:
+        if os.path.exists('tasks.json'):
+            with open('tasks.json', 'r', encoding='utf-8') as f:
+                data = json.load(f)
+                tasks = data['tasks']
+                task_counter = data['task_counter']
+            print("\nโหลดข้อมูลเรียบร้อยแล้ว")
+        else:
+            tasks = []
+            task_counter = 1
+            print("\nเริ่มต้นโปรแกรมด้วยรายการว่าง")
+    except Exception as e:
+        print(f"\nเกิดข้อผิดพลาดในการโหลดข้อมูล: {e}")
+        tasks = []
+        task_counter = 1
+
 def main():
+    # โหลดข้อมูลเมื่อเริ่มโปรแกรม
+    load_tasks()
+    
     while True:
         print("\n=== Todo List Menu ===")
         print("1. เพิ่มงานใหม่")
@@ -138,6 +175,7 @@ def main():
         elif choice == "4":
             delete_task()
         elif choice == "5":
+            save_tasks()  # บันทึกข้อมูลก่อนออกจากโปรแกรม
             print("ขอบคุณที่ใช้บริการ!")
             break
         else:
