@@ -89,7 +89,34 @@ def edit_task():
         print("กรุณาป้อนตัวเลขเท่านั้น")
 
 def delete_task():
-    pass
+    # แสดงรายการงานก่อน
+    view_tasks()
+    
+    if not tasks:  # ถ้าไม่มีงานในรายการ
+        return  # ออกจากฟังก์ชันเลย เพราะไม่มีงานให้ลบ
+    
+    # รับ index จากผู้ใช้
+    try:
+        index = int(input("\nกรุณาเลือกลำดับงานที่ต้องการลบ: ")) - 1
+        
+        # ตรวจสอบว่า index ถูกต้องหรือไม่
+        if index < 0 or index >= len(tasks):
+            print("ลำดับงานไม่ถูกต้อง")
+            return
+            
+        # แสดงข้อมูลงานที่จะลบและขอคำยืนยัน
+        task = tasks[index]
+        print(f"\nงานที่จะลบ: {task['title']}")
+        confirmation = input("ต้องการลบงานนี้จริงหรือไม่ (y/n): ").lower()
+        
+        if confirmation == 'y':
+            deleted_task = tasks.pop(index)
+            print(f"\nลบงาน '{deleted_task['title']}' เรียบร้อยแล้ว")
+        else:
+            print("\nยกเลิกการลบงาน")
+            
+    except ValueError:
+        print("กรุณาป้อนตัวเลขเท่านั้น")
 
 def main():
     while True:
